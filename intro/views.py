@@ -89,3 +89,5 @@ def give_results(request):
 
 
 # coool vlue 1E96FC
+# original yellow #ffed66;
+#original blue 26547c;

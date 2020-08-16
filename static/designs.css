@@ -49,7 +49,7 @@ li {
 .title {
 
     text-align: center;
-    background-color: #FFB238;
+    background-color: #ffed66;
     text-align: center;
     width: 100%;
     font-size: 110px;
@@ -91,10 +91,12 @@ li {
 
 .menu-button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #ffed66;
+    background-color: #fffc63;
     font-size: 20px;
     border-style: none;
     padding: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
     margin-right: 1%;
     border-radius: 5px;
 
@@ -135,3 +137,12 @@ li {
   /* put the nav on the left */
   order: -1;
 }
+
+.grad {
+  background-image: linear-gradient(to right, #26547c,#292f36 , #26547c);
+}
+
+.diag {
+    background: linear-gradient(to bottom right, #ffed66 85%, #6a7bde 5%);
+}
+
