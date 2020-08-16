@@ -2,20 +2,19 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.template.backends import django
 from django.views.decorators.csrf import csrf_exempt
-from Rec import Recommender
+from Rec import RecommendProgram
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_protect
 import json
-
 
 # Create your views here.
 
 movie_to_add = None
 moviesoo = []
-reco = Recommender()
+reco = RecommendProgram()
+
 
 def intro(request):
-
     return render(request, "Intro.html")
 
 
@@ -31,7 +30,8 @@ def external(request):
         passing = {"movie": movie['title']}
         pass
     elif request.POST['option'] == "result":
-        pass
+        rec1 = reco.recommend_movies()
+        passing = {'result': rec1}
     else:
         movies = reco.search_movie(request.POST['option'])
         print(movies)
@@ -44,21 +44,48 @@ def external(request):
 
 @csrf_exempt
 def add_movie(request):
-    print("ss")
     ss = json.loads(request.body)
     print(ss["movie"])
     print(ss['rate'])
     print("he")
-    global movie_to_add,moviesoo
-    #print(request.POST['but'])
-    #reco.add_new_movie_rating(movie_to_add,request.POST['but'])
-    for i,m in moviesoo.iterrows():
+    global movie_to_add, moviesoo
+    # print(request.POST['but'])
+    # reco.add_new_movie_rating(movie_to_add,request.POST['but'])
+    for i, m in moviesoo.iterrows():
         if ss['movie'] == m['title']:
             movie_to_add = m
             break
 
-    reco.add_new_movie_rating(movie_to_add,ss['rate'] )
+    reco.add_new_movie_rating(movie_to_add, ss['rate'])
     aa = HttpRequest()
     aa.POST['option'] = "show"
     return external(aa)
 
+
+@csrf_exempt
+def add_movie_shown(request):
+    print(request.POST['but'])
+    reco.add_new_movie_rating(movie_to_add, request.POST['but'])
+    aa = HttpRequest()
+    aa.POST['option'] = "show"
+    return external(aa)
+
+
+@csrf_exempt
+def give_results(request):
+    global movie_to_add, moviesoo
+
+    # rec1 = reco.recommend_movies()
+    print("fffff")
+    passing = {}
+
+    aa = HttpRequest()
+    # for i,moviess in rec1.iterrows():
+    # print(moviess.title)
+    aa.POST['option'] = "result"
+    rec1 = "hhhh"
+    passings = {'ola': 'pp'}
+    return external(aa)
+
+
+# coool vlue 1E96FC

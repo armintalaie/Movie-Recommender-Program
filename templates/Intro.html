@@ -19,99 +19,171 @@
 </div>
 
 
-<form id="named">
-    <p> input name please</p>
-    <input type="text" content="name" id="a">
-    <input onclick="f(document.getElementById('a').value);return false;" type="submit" value="Add">
-</form>
-
-<button onclick="function f2() {
-                      window.alert('aakkkkkk')
-               }">click me
-</button>
-
-<button id="sss" onclick="addOption()"> hh</button>
+<br>
+<br>
 <br>
 
 
-<form action='/external/' method='POST'>
-    <button onclick="f1()"> Find Me Movies</button>
-</form>
+<div class="HolyGrail">
+
+    <div class="HolyGrail-body">
+
+        <main class="HolyGrail-content" style="align-items: center;">
+            <p style="text-align: center; font-weight: bold; font-size: 20px">
+                <span style="font-size: 30px;">Don't know what movie to watch next? </span> <br>
+                <br>
+                Rate a couple movies you've seen and get a personalized list of movies to watch.
+            </p>
+            <br>
 
 
-<form id="menu" action='/external/' method='POST'>
-    <div style="text-align: center">
-        <ul style="text-align: center">
-            <button type="button" id="search_movies" onclick="search_movie()" class="menu-button"> Search Movies
-            </button>
-            <button type="submit" name="option" value="show" class="menu-button"> Show Movies</button>
-            <button class="menu-button" name="option" value="result"> Suggest Movies To Watch</button>
-        </ul>
-    </div>
-</form>
-
-<ul>
-
-</ul>
-
-<form action='/add_movie/' method='POST'>
-
-    <div style="width: 60%; margin: auto; text-align: center">
-        {% csrf_token %}
-        <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
-        {% for ind,i in movies.iterrows %}
-            <div class="movie-item">
-
-
-                <ul style=" ">
-                    <li class="movie"><label>{{ i.title }}</label></li>
-                    <li class="list-item">
-                        <button class="options"> skip</button>
-                        <button onclick="rate_move(this)" data-rate="1" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 1
+            <form style="; align-content: center ;" id="menu" action='/external/'
+                  method='POST'>
+                <div style="">
+                    <ul style="text-align: center">
+                        <button type="button" id="search_movies" onclick="search_movie()" class="menu-button"> Search
+                            Movies
                         </button>
-                        <button onclick="rate_move(this)" data-rate="2" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 2
+                        <button type="submit" name="option" value="show" class="menu-button"> Show Movies To Rate
                         </button>
-                        <button onclick="rate_move(this)" data-rate="3" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 3
+                    </ul>
+                    <ul style="text-align: center">
+                        <button type="submit" onclick="giveRec()" class="menu-button"
+                                style="padding-left: 8%; padding-right: 8%; font-weight: bold" name="option"
+                                value="result">
+                            Suggest Movies
+                            To Watch
                         </button>
-                        <button onclick="rate_move(this)" data-rate="4" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 4
-                        </button>
-                        <button onclick="rate_move(this)" data-rate="5" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 5
-                        </button>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
+            </form>
 
+            <form action='/add_movie/' method='POST'>
+
+                <div style="width: 95%; margin: auto; text-align: center">
+                    {% csrf_token %}
+                    <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
+                    {% for ind,i in movies.iterrows %}
+                        <div class="movie-item">
+
+
+                            <ul style=" ">
+                                <li class="movie"><label>{{ i.title }}</label></li>
+                                <li class="list-item">
+                                    <button class="options"> skip</button>
+                                    <button onclick="rate_move(this)" data-rate="1" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> 1
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="2" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> 2
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="3" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> 3
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="4" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> 4
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="5" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> 5
+                                    </button>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </form>
+
+            <form action='/add_new_movie/' method='POST'>
+
+                <div style="width: 95%; margin: auto; text-align: center; background-color: #26547c">
+                    {% csrf_token %}
+                    <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
+                    {% if movie %}
+                        <div class="movie-item">
+
+                            <ul style=" ">
+                                <li class="movie"><p>{{ movie }}</p></li>
+                                <li class="list-item">
+                                    <button class="options"> haven't seen it</button>
+                                    <button type="submit" name="but" value="1" class="options"> 1</button>
+                                    <button type="submit" name="but" value="2" class="options"> 2</button>
+                                    <button type="submit" name="but" value="3" class="options"> 3</button>
+                                    <button type="submit" name="but" value="4" class="options"> 4</button>
+                                    <button type="submit" name="but" value="5" class="options"> 5</button>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </form>
+
+
+            <div style="width: 95%; margin: auto; text-align: center;">
+                {% for i,rr in result.iterrows %}
+                    <div class="movie-item">
+                        <ul style=" ">
+                            <li class="movie"><p>{{ rr.title }}</p></li>
+                        </ul>
+                    </div>
+                {% endfor %}
 
             </div>
-        {% endfor %}
+        </main>
+        <nav class="HolyGrail-nav">
+            <section style="background-color: #26547c; padding: 10%; color: white; font-size: 16px; border-radius: 8%">
+                <h1 style="font-size: 26px"> Instructions </h1>
+                <p>
+                    To find movies for you to watch we need to know your style and taste.<br> <br>
+
+                    You can search for movies you've watched or see random movies and rate them out of five. <br>
+                    after just rating 20 movies you've watched Click the "Suggest Movies to Watch" to get your
+                    personalized
+                    list"
+                    <br>
+                    <br>
+                    ** The more you rate movies, the more accurate your recommendation would be
+                </p>
+            </section>
+        </nav>
+
+        <aside class="HolyGrail-ads">
+
+            <section style="background-color: #3A405A; padding: 10%; color: white; font-size: 16px; border-radius: 1%">
+                <h1 style="font-size: 26px"> Account </h1>
+                <p> you can sign in or sign up to have your rated movies saved so everytime you watch another movie,
+                you can add to your list and get better recommendations ;)</p>
+                <p>
+                    To find movies for you to watch we need to know your style and taste.<br> <br>
+
+                    You can search for movies you've watched or see random movies and rate them out of five. <br>
+                    after just rating 20 movies you've watched Click the "Suggest Movies to Watch" to get your
+                    personalized
+                    list"
+                    <br>
+                    <br>
+                    ** The more you rate movies, the more accurate your recommendation would be
+                </p>
+                <form>
+                    <span> username </span>
+                    <input type="text">
+                    <span> password </span>
+                    <input type="text"> <br>
+
+                    <input type="button" value="signup" class="menu-button">
+                </form>
+            </section>
+        </aside>
     </div>
-
-</form>
-
-<form action='/add_movie/' method='POST'>
-
-    <div style="width: 60%; margin: auto; text-align: center; background-color: #26547c">
-        {% csrf_token %}
-        <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
-        {% if movie %}
-            <div class="movie-item">
-
-                <ul style=" ">
-                    <li class="movie"><p>{{ movie }}</p></li>
-                    <li class="list-item">
-                        <button class="options"> haven't seen it</button>
-                        <button type="submit" name="but" value="1" class="options"> 1</button>
-                        <button type="submit" name="but" value="2" class="options"> 2</button>
-                        <button type="submit" name="but" value="3" class="options"> 3</button>
-                        <button type="submit" name="but" value="4" class="options"> 4</button>
-                        <button type="submit" name="but" value="5" class="options"> 5</button>
-                    </li>
-                </ul>
-            </div>
-        {% endif %}
-    </div>
-
-</form>
-
+</div>
 
 </body>
 </html>

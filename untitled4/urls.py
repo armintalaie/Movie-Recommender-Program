@@ -15,15 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from intro.views import intro
-from intro.views import external
-from intro.views import add_movie
+from intro.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('intro/', intro),
     path('external/', external),
-    path('add_movie/', add_movie)
+    path('add_movie/', add_movie),
+    path('results/', give_results),
+    path('add_new_movie/', add_movie_shown),
 
 ]

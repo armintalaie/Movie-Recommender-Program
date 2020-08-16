@@ -11,7 +11,7 @@ MOVIES_TO_RECOMMEND = 10
 pd.set_option('display.max_columns', 7)
 
 
-class Recommender(object):
+class RecommendProgram(object):
 
     def __init__(self):
         self.user_data = self.load_user_file()
@@ -106,8 +106,22 @@ class Recommender(object):
                          names[2]: movie['genres'], names[3]: rate})
 
     def recommend_movies(self):
-        # recommend movies
-        pass
+        first_data = {}
+
+        with open("curr.csv", newline='') as csvfile:
+            ratings_reader = csv.DictReader(csvfile)
+            for row in ratings_reader:
+                if (row['rating'] != "") and (float(row['rating']) > 0) and (float(row['rating']) < 6):
+                    first_data.update({int(row['item']):  float(row['rating'])})
+
+        user_user = UserUser(20, min_nbrs=5)
+        algo = Recommender.adapt(user_user)
+        algo.fit(self.data.ratings)
+        rec1 = algo.recommend(-1, 20, ratings=pd.Series(first_data))
+        joined_data = rec1.join(self.data.movies['genres'], on='item')
+        joined_data = joined_data.join(self.data.movies['title'], on='item')
+        print(joined_data[joined_data.columns[2:]])
+        return joined_data
 
     def fetch_more_movie_data(self):
         # box office, language

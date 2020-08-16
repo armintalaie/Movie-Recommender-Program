@@ -2,7 +2,7 @@ var name = "";
 var optionsd = document.get('po');
 window.alert(optionsd.length);
 
-for (var i = 0; i <  optionsd.length; i++) {
+for (var i = 0; i < optionsd.length; i++) {
     window.alert("hitt")
     optionsd[i].addEventListener('click', function () {
 
@@ -50,7 +50,7 @@ function search_movie() {
     search_button.setAttribute("value", "search");
 
     search_bar.setAttribute("content", "option");
-     search_bar.setAttribute("name", "option");
+    search_bar.setAttribute("name", "option");
     search_button.setAttribute("class", "menu-button");
     search_bar.setAttribute("class", "menu-button");
     new_form.appendChild(search_bar);
@@ -61,7 +61,7 @@ function search_movie() {
     new_form.action = '/external/';
 
     var baby = document.getElementById('search_movies');
-    baby.parentNode.insertBefore(new_form,baby.nextSibling);
+    baby.parentNode.insertBefore(new_form, baby.nextSibling);
 
 
     return false;
@@ -74,11 +74,17 @@ function rate_move(r) {
     window.alert(r.dataset.movie);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/add_movie/", true);
-    xhr.open("POST", "/add_movie/", true);
     xhr.send(JSON.stringify({
-    movie: r.dataset.movie,
-        rate : r.dataset.rate
-}));
+        movie: r.dataset.movie,
+        rate: r.dataset.rate
+    }));
 
 
+}
+
+
+function giveRec() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/results/", true);
+    xhr.send()
 }
