@@ -1,0 +1,101 @@
+.options {
+
+    color: white;
+    background: transparent;
+    font-size: 20px;
+    min-width: 10%;
+    height: 100%;
+    border-style: solid;
+    border-radius: 50px;
+    border-color: white;
+    padding-right: 1%;
+    padding-left: 1%;
+    margin-right: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+body {
+    /*background-image: url('/static/all_resources/backg.jpg');
+    background-size: cover;
+
+     */
+    background-color: #d8d8d8;
+    font-family: 'Rubik';
+}
+
+
+.list-item {
+
+    list-style-type: none;
+}
+
+ul {
+    list-style: none;
+    alignment: center;
+}
+
+li {
+    height: 30px;
+    alignment: center;
+    align-content: center;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.title {
+
+    text-align: center;
+    background-color: #ffed66;
+    text-align: center;
+    width: 100%;
+    font-size: 110px;
+    color: #000000;
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+.movie-item {
+    padding-bottom: 2%;
+    padding-top: 0.4%;
+    border-radius: 5px;
+    alignment: center;
+    text-align: center;
+    background-color: #292f36;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 2%;
+}
+
+.movie {
+    color: white;
+    font-weight: bold;
+
+    list-style-type: none;
+    font-size: 25px;
+    padding-bottom: 2%;
+
+
+}
+
+.poster {
+    width: 60%;
+    clear: both;
+}
+
+
+.menu-button {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #ffed66;
+    font-size: 20px;
+    border-style: none;
+    padding: 2%;
+    margin-right: 1%;
+    border-radius: 5px;
+
+}

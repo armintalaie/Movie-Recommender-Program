@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'designs.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+
+</head>
+<body id="bod">
+<div class="shadow" style=";alignment: center; width: 100%; min-height: 70%; background-color: aquamarine">
+
+    <h1 class="title" id="ss"> Movie Finder <span id="username"></span></h1>
+    <div style="background: #26547c; height:40px; width:100%; padding-bottom: 0 "></div>
+
+
+</div>
+
+
+<form id="named">
+    <p> input name please</p>
+    <input type="text" content="name" id="a">
+    <input onclick="f(document.getElementById('a').value);return false;" type="submit" value="Add">
+</form>
+
+<button onclick="function f2() {
+                      window.alert('aakkkkkk')
+               }">click me
+</button>
+
+<button id="sss" onclick="addOption()"> hh</button>
+<br>
+
+
+<form action='/external/' method='POST'>
+    <button onclick="f1()"> Find Me Movies</button>
+</form>
+
+
+<form id="menu" action='/external/' method='POST'>
+    <div style="text-align: center">
+        <ul style="text-align: center">
+            <button type="button" id="search_movies" onclick="search_movie()" class="menu-button"> Search Movies
+            </button>
+            <button type="submit" name="option" value="show" class="menu-button"> Show Movies</button>
+            <button class="menu-button" name="option" value="result"> Suggest Movies To Watch</button>
+        </ul>
+    </div>
+</form>
+
+<ul>
+
+</ul>
+
+<form action='/add_movie/' method='POST'>
+
+    <div style="width: 60%; margin: auto; text-align: center">
+        {% csrf_token %}
+        <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
+        {% for ind,i in movies.iterrows %}
+            <div class="movie-item">
+
+
+                <ul style=" ">
+                    <li class="movie"><label>{{ i.title }}</label></li>
+                    <li class="list-item">
+                        <button class="options"> skip</button>
+                        <button onclick="rate_move(this)" data-rate="1" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 1
+                        </button>
+                        <button onclick="rate_move(this)" data-rate="2" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 2
+                        </button>
+                        <button onclick="rate_move(this)" data-rate="3" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 3
+                        </button>
+                        <button onclick="rate_move(this)" data-rate="4" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 4
+                        </button>
+                        <button onclick="rate_move(this)" data-rate="5" data-movie="{{ i.title }}"  type="button" name="but"  class="options"> 5
+                        </button>
+                    </li>
+                </ul>
+
+
+            </div>
+        {% endfor %}
+    </div>
+
+</form>
+
+<form action='/add_movie/' method='POST'>
+
+    <div style="width: 60%; margin: auto; text-align: center; background-color: #26547c">
+        {% csrf_token %}
+        <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
+        {% if movie %}
+            <div class="movie-item">
+
+                <ul style=" ">
+                    <li class="movie"><p>{{ movie }}</p></li>
+                    <li class="list-item">
+                        <button class="options"> haven't seen it</button>
+                        <button type="submit" name="but" value="1" class="options"> 1</button>
+                        <button type="submit" name="but" value="2" class="options"> 2</button>
+                        <button type="submit" name="but" value="3" class="options"> 3</button>
+                        <button type="submit" name="but" value="4" class="options"> 4</button>
+                        <button type="submit" name="but" value="5" class="options"> 5</button>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+</form>
+
+
+</body>
+</html>
