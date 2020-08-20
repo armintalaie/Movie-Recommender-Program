@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'untitled4.urls'
+ROOT_URLCONF = 'MovieRecApp.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'untitled4.wsgi.application'
+WSGI_APPLICATION = 'MovieRecApp.wsgi.application'
 
 
 # Database
