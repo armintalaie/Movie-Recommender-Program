@@ -1,5 +1,5 @@
 """
-ASGI config for untitled4 project.
+ASGI config for MovieRecApp project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
