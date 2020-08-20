@@ -3,7 +3,7 @@ import csv
 import pandas as pd
 from lenskit.algorithms import Recommender
 from lenskit.algorithms.user_knn import UserUser
-import re
+from os import path
 
 MOVIE_DATA_LOC = "/Users/armintalaie/PycharmProjects/MovieRecommender/ml-25m"
 SEARCH_RESULT_COUNT = 10
@@ -12,19 +12,33 @@ pd.set_option('display.max_columns', 7)
 
 
 class RecommendProgram(object):
+    username = "curr.csv"
 
-    def __init__(self):
+    def __init__(self, username):
+        if path.exists(username + ".csv"):
+            self.username = username + ".csv"
+        else:
+            with open(self.username, 'w') as csvfile:
+                field_names = ['item', 'title', 'genres', 'rating']
+                file_writer = csv.DictWriter(csvfile, delimiter=',',
+                                             quotechar='|', quoting=csv.QUOTE_MINIMAL, fieldnames=field_names)
+                file_writer.writeheader()
+
         self.user_data = self.load_user_file()
-
         self.data = ds.MovieLens(MOVIE_DATA_LOC)
         self.combined = self.data.ratings.join(self.data.movies['genres'], on='item')
         self.combined = self.combined.join(self.data.movies['title'], on='item')
-
         self.enriched_movies = self.data.movies.copy()
-
         self.enriched_movies.rename(columns={"movieId": "item"})
         counts = self.data.ratings.groupby(by="item").count()
+        counts = counts.rename(columns={'user': 'count'})
+
         self.enriched_movies = self.enriched_movies.join(counts['rating'], on='item')
+        self.removed = pd.merge(self.data.ratings, counts['count'], on='item')
+        self.removed = self.removed.sort_values(by='count', ascending=False)
+        print(self.removed)
+        self.removed = self.removed.loc[self.removed['count'] > 1000]
+        print(self.removed)
 
     def search_movies(self):
         command = None
@@ -62,6 +76,7 @@ class RecommendProgram(object):
         confirmed_movies = self.load_user_file()
         movies = self.enriched_movies.sort_values(by='rating', ascending=False)
         movies = movies.reset_index()
+        movies = movies.loc[movies['rating'] > 1000]
         print(movies.head(5))
 
         for i, movie in movies.iterrows():
@@ -91,7 +106,7 @@ class RecommendProgram(object):
 
     def load_user_file(self):
         confirmed_movies = []
-        with open("curr.csv", newline='') as file:
+        with open(self.username, newline='') as file:
             rating_reader = csv.DictReader(file)
             for row in rating_reader:
                 confirmed_movies.append(int(row['item']))
@@ -99,7 +114,7 @@ class RecommendProgram(object):
         return confirmed_movies
 
     def add_new_movie_rating(self, movie, rate):
-        with open("curr.csv", "a", newline='') as f:
+        with open(self.username, "a", newline='') as f:
             names = ['item', 'title', 'genres', 'ratings']
             wr = csv.DictWriter(f, fieldnames=names)
             wr.writerow({names[0]: movie['item'], names[1]: movie['title'],
@@ -108,16 +123,16 @@ class RecommendProgram(object):
     def recommend_movies(self):
         first_data = {}
 
-        with open("curr.csv", newline='') as csvfile:
+        with open(self.username, newline='') as csvfile:
             ratings_reader = csv.DictReader(csvfile)
             for row in ratings_reader:
                 if (row['rating'] != "") and (float(row['rating']) > 0) and (float(row['rating']) < 6):
-                    first_data.update({int(row['item']):  float(row['rating'])})
+                    first_data.update({int(row['item']): float(row['rating'])})
 
         user_user = UserUser(20, min_nbrs=5)
         algo = Recommender.adapt(user_user)
-        algo.fit(self.data.ratings)
-        rec1 = algo.recommend(-1, 20, ratings=pd.Series(first_data))
+        algo.fit(self.removed)
+        rec1 = algo.recommend(-1, 10, ratings=pd.Series(first_data))
         joined_data = rec1.join(self.data.movies['genres'], on='item')
         joined_data = joined_data.join(self.data.movies['title'], on='item')
         print(joined_data[joined_data.columns[2:]])

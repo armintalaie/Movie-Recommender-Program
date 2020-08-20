@@ -11,7 +11,7 @@ import json
 
 movie_to_add = None
 moviesoo = []
-reco = RecommendProgram()
+reco = RecommendProgram("")
 
 
 def intro(request):
@@ -21,7 +21,6 @@ def intro(request):
 @csrf_exempt
 def external(request):
     print(request.POST['option'])
-    print("aaaaaa")
     passing = {}
     if request.POST['option'] == "show":
         movie = reco.show_movies_to_rate(True)
