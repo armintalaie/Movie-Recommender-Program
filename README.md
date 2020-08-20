@@ -1,5 +1,7 @@
 # Movie Recommender Web Application
-![GitHub Logo](movie-camera-logo.jpg)
+
+<img src="movie-logo.png" align="right" width="460" alt="">
+
 ## What this program does:
 - User can input movie rating of movies they have watched:
     - searching and rating
