@@ -5,7 +5,7 @@ from lenskit.algorithms import Recommender
 from lenskit.algorithms.user_knn import UserUser
 from os import path
 
-MOVIE_DATA_LOC = "/Users/armintalaie/PycharmProjects/MovieRecommender/ml-25m"
+MOVIE_DATA_LOC = "ml-25m"
 SEARCH_RESULT_COUNT = 10
 MOVIES_TO_RECOMMEND = 10
 pd.set_option('display.max_columns', 7)
