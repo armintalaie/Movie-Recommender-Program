@@ -64,7 +64,7 @@ function search_movie() {
 
 function rate_move(r) {
 
-    window.alert("got it" + r.dataset);
+   window.alert("recored rating for " + r.dataset.movie +" press \"show movies to rate\" for more");
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/add_movie/", true);
     xhr.send(JSON.stringify({
