@@ -4,12 +4,13 @@ import pandas as pd
 from lenskit.algorithms import Recommender
 from lenskit.algorithms.user_knn import UserUser
 from os import path
+import re
 
 MOVIE_DATA_LOC ="ml-latest-small"
 SEARCH_RESULT_COUNT = 10
 MOVIES_TO_RECOMMEND = 10
 pd.set_option('display.max_columns', 7)
-
+movie_data = ds.MovieLens(MOVIE_DATA_LOC)
 
 class RecommendProgram(object):
     username = "curr.csv"
@@ -25,7 +26,7 @@ class RecommendProgram(object):
                 file_writer.writeheader()
 
         self.user_data = self.load_user_file()
-        self.data = ds.MovieLens(MOVIE_DATA_LOC)
+        self.data = movie_data
         self.combined = self.data.ratings.join(self.data.movies['genres'], on='item')
         self.combined = self.combined.join(self.data.movies['title'], on='item')
         self.enriched_movies = self.data.movies.copy()
@@ -36,9 +37,8 @@ class RecommendProgram(object):
         self.enriched_movies = self.enriched_movies.join(counts['rating'], on='item')
         self.removed = pd.merge(self.data.ratings, counts['count'], on='item')
         self.removed = self.removed.sort_values(by='count', ascending=False)
-        print(self.removed)
         self.removed = self.removed.loc[self.removed['count'] > 10]
-        print(self.removed)
+
 
     def search_movies(self):
         command = None
@@ -55,13 +55,12 @@ class RecommendProgram(object):
             choose = int(input("type number"))
             movie = result.iloc[choose - 1:choose]
             movie = movie.reset_index()
-            print(movie)
             rate = input("How do you rate this from 0 to 5\n")
             self.add_new_movie_rating(movie, rate)
 
     def search_movie(self, title):
 
-        result = self.enriched_movies[self.enriched_movies['title'].str.contains(title)]
+        result = self.enriched_movies[self.enriched_movies['title'].str.contains(title, flags=re.IGNORECASE)]
         result = result.sort_values(by='rating', ascending=False)
         result = result.reset_index()
 

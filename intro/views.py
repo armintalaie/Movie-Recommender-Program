@@ -5,13 +5,15 @@ from django.views.decorators.csrf import csrf_exempt
 from Rec import RecommendProgram
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_protect
+from django.template import loader
 import json
+from django.http import HttpResponse
 
-# Create your views here.
 
+reco = RecommendProgram("")
 movie_to_add = None
 moviesoo = []
-reco = RecommendProgram("")
+
 
 
 def intro(request):
@@ -25,10 +27,12 @@ def external(request):
     print(request.POST['option'])
     passing = {}
     if request.POST['option'] == "show":
+        template = loader.get_template('Intro.html')
+
         movie = reco.show_movies_to_rate(True)
         movie_to_add = movie
         passing = {"movie": movie['title']}
-        print(movie['title'])
+
         pass
     elif request.POST['option'] == "result":
         rec1 = reco.recommend_movies()
@@ -56,6 +60,12 @@ def add_movie(request):
             if ss['movie'] == m['title']:
                 movie_to_add = m
                 break
+    else:
+        reco.add_new_movie_rating(movie_to_add, ss['rate'])
+        aa = HttpRequest()
+        aa.POST['option'] = "show"
+        movie_to_add = None
+        moviesoo = None
 
     reco.add_new_movie_rating(movie_to_add, ss['rate'])
     aa = HttpRequest()
@@ -79,14 +89,12 @@ def give_results(request):
     global movie_to_add, moviesoo
 
     # rec1 = reco.recommend_movies()
-    print("fffff")
     passing = {}
 
     aa = HttpRequest()
     # for i,moviess in rec1.iterrows():
     # print(moviess.title)
     aa.POST['option'] = "result"
-    rec1 = "hhhh"
     passings = {'ola': 'pp'}
     return external(aa)
 
