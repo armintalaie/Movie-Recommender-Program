@@ -102,6 +102,17 @@ li {
 
 }
 
+.notice {
+    background-color: #74ca6a;
+    font-size: 16px;
+    border-style: none;
+    padding: 1%;
+    padding-left: 4%;
+    padding-right: 4%;
+    margin-right: 1%;
+    border-radius: 5px;
+}
+
 .column {
   float: left;
   width: 50%;

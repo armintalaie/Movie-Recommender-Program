@@ -5,7 +5,7 @@ from lenskit.algorithms import Recommender
 from lenskit.algorithms.user_knn import UserUser
 from os import path
 
-MOVIE_DATA_LOC = "ml-latest-small"
+MOVIE_DATA_LOC ="ml-latest-small"
 SEARCH_RESULT_COUNT = 10
 MOVIES_TO_RECOMMEND = 10
 pd.set_option('display.max_columns', 7)
@@ -19,7 +19,7 @@ class RecommendProgram(object):
             self.username = username + ".csv"
         else:
             with open(self.username, 'w') as csvfile:
-                field_names = ['item', 'title', 'genres', 'rating']
+                field_names = ['item', 'title', 'genres', 'ratings']
                 file_writer = csv.DictWriter(csvfile, delimiter=',',
                                              quotechar='|', quoting=csv.QUOTE_MINIMAL, fieldnames=field_names)
                 file_writer.writeheader()
@@ -37,7 +37,7 @@ class RecommendProgram(object):
         self.removed = pd.merge(self.data.ratings, counts['count'], on='item')
         self.removed = self.removed.sort_values(by='count', ascending=False)
         print(self.removed)
-        self.removed = self.removed.loc[self.removed['count'] > 1000]
+        self.removed = self.removed.loc[self.removed['count'] > 10]
         print(self.removed)
 
     def search_movies(self):
@@ -126,10 +126,11 @@ class RecommendProgram(object):
         with open(self.username, newline='') as csvfile:
             ratings_reader = csv.DictReader(csvfile)
             for row in ratings_reader:
-                if (row['rating'] != "") and (float(row['rating']) > 0) and (float(row['rating']) < 6):
-                    first_data.update({int(row['item']): float(row['rating'])})
+                if (row['ratings'] != "") and (float(row['ratings']) > 0) and (float(row['ratings']) < 6):
+                    first_data.update({int(row['item']): float(row['ratings'])})
 
-        user_user = UserUser(20, min_nbrs=5)
+        user_user = UserUser(10, min_nbrs=5)
+        print(self.removed)
         algo = Recommender.adapt(user_user)
         algo.fit(self.removed)
         rec1 = algo.recommend(-1, 10, ratings=pd.Series(first_data))

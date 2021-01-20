@@ -20,13 +20,15 @@ def intro(request):
 
 @csrf_exempt
 def external(request):
+    global movie_to_add, moviesoo
+    movie_to_add = None
     print(request.POST['option'])
     passing = {}
     if request.POST['option'] == "show":
         movie = reco.show_movies_to_rate(True)
-        global movie_to_add, moviesoo
         movie_to_add = movie
         passing = {"movie": movie['title']}
+        print(movie['title'])
         pass
     elif request.POST['option'] == "result":
         rec1 = reco.recommend_movies()
@@ -36,7 +38,6 @@ def external(request):
         print(movies)
         passing = {"movies": movies}
         moviesoo = movies
-    print("geee")
 
     return render(request, "Intro.html", passing)
 
@@ -46,18 +47,21 @@ def add_movie(request):
     ss = json.loads(request.body)
     print(ss["movie"])
     print(ss['rate'])
-    print("he")
     global movie_to_add, moviesoo
     # print(request.POST['but'])
     # reco.add_new_movie_rating(movie_to_add,request.POST['but'])
-    for i, m in moviesoo.iterrows():
-        if ss['movie'] == m['title']:
-            movie_to_add = m
-            break
+
+    if ( movie_to_add is  None):
+        for i, m in moviesoo.iterrows():
+            if ss['movie'] == m['title']:
+                movie_to_add = m
+                break
 
     reco.add_new_movie_rating(movie_to_add, ss['rate'])
     aa = HttpRequest()
     aa.POST['option'] = "show"
+    movie_to_add = None
+
     return external(aa)
 
 

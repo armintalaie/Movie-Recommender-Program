@@ -12,7 +12,7 @@
 <body id="bod">
 <div class="shadow" style=";alignment: center; width: 100%; min-height: 70%; background-color: aquamarine">
 
-    <h1 class="title diag" id="ss"> Movie Finder <span id="username"></span></h1>
+    <h1 class="title diag" id="ss"> Movie Mine <span id="username"></span></h1>
     <div style="background: #26547c; height:40px; width:100%; padding-bottom: 0 " ></div>
 
 
@@ -70,7 +70,10 @@
                             <ul style=" ">
                                 <li class="movie"><label>{{ i.title }}</label></li>
                                 <li class="list-item">
-                                    <button class="options"> skip</button>
+                                     <button onclick="rate_move(this)" data-rate="1" data-movie="{{ i.title }}"
+                                            type="button"
+                                            name="but" class="options"> Skip
+                                    </button>
                                     <button onclick="rate_move(this)" data-rate="1" data-movie="{{ i.title }}"
                                             type="button"
                                             name="but" class="options"> 1
@@ -105,19 +108,37 @@
 
                 <div style="width: 95%; margin: auto; text-align: center; background-color: #26547c">
                     {% csrf_token %}
-                    <!--<img class="poster" style=" " src="/static/all_resources/backg.jpg">-->
+
                     {% if movie %}
                         <div class="movie-item">
 
                             <ul style=" ">
                                 <li class="movie"><p>{{ movie }}</p></li>
-                                <li class="list-item">
-                                    <button type="submit" name="but" value="0" class="options"> haven't seen it</button>
-                                    <button type="submit" name="but" value="1" class="options"> 1</button>
-                                    <button type="submit" name="but" value="2" class="options"> 2</button>
-                                    <button type="submit" name="but" value="3" class="options"> 3</button>
-                                    <button type="submit" name="but" value="4" class="options"> 4</button>
-                                    <button type="submit" name="but" value="5" class="options"> 5</button>
+                               <li class="list-item">
+                                   <button onclick="rate_move(this)" data-rate="1" data-movie="{{ movie.title }}"
+                                            type="button"
+                                            name="but" class="options"> Skip
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="1" data-movie="{{ movie.title }}"
+                                            type="button"
+                                            name="but" class="options"> 1
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="2" data-movie="{{ movie.title }}"
+                                            type="button"
+                                            name="but" class="options"> 2
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="3" data-movie="{{ movie.title }}"
+                                            type="button"
+                                            name="but" class="options"> 3
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="4" data-movie="{{ movie.title }}"
+                                            type="button"
+                                            name="but" class="options"> 4
+                                    </button>
+                                    <button onclick="rate_move(this)" data-rate="5" data-movie="{{ moviex.title }}"
+                                            type="button"
+                                            name="but" class="options"> 5
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -156,6 +177,7 @@
             </section>
 
             <section class="shadow" style="background-color: #465c8b; padding: 10%; color: white; font-size: 16px; border-radius: 1%">
+                <h3 class="notice" style="color: #C5F776;"> Under construction</h3>
                 <h1 style="font-size: 26px"> Feedback </h1>
                 <p>
                     If you liked using this website or had any issues or suggestions, your feedback would greatly
@@ -181,6 +203,7 @@
         <aside class="HolyGrail-ads">
 
             <section class="shadow" style="background-color: #465c8b; padding: 10%; color: white; font-size: 16px; border-radius: 1%">
+                 <h3 class="notice" style="color: #C5F776;"> Under construction</h3>
                 <h1 style="font-size: 26px"> Account </h1>
                 <p> you can sign in or sign up to have your rated movies saved so every time you watch another movie,
                     you can add to your list and get better recommendations ;)</p>

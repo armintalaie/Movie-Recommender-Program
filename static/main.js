@@ -3,7 +3,6 @@ var optionsd = document.get('po');
 window.alert(optionsd.length);
 
 for (var i = 0; i < optionsd.length; i++) {
-    window.alert("hitt")
     optionsd[i].addEventListener('click', function () {
 
         window.alert("hitt")
@@ -20,11 +19,6 @@ function f(a) {
 }
 
 
-function f1() {
-
-    window.alert('a')
-}
-
 function addOption() {
 
     var cc = document.createElement('ul');
@@ -36,7 +30,6 @@ function addOption() {
     var baby = document.getElementById('sss');
     element.insertBefore(qq, baby);
     window.alert('aaa')
-    console.log('aaaaaaankjnfjfnwerknewkjenfejkkj')
 
 
 }
@@ -71,7 +64,7 @@ function search_movie() {
 
 function rate_move(r) {
 
-    window.alert(r.dataset.movie);
+    window.alert("got it" + r.dataset);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/add_movie/", true);
     xhr.send(JSON.stringify({
