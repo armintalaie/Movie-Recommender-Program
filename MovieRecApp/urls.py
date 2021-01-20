@@ -21,10 +21,11 @@ from intro.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('intro/', intro),
-    path('/', intro),
+
     path('external/', external),
     path('add_movie/', add_movie),
     path('results/', give_results),
     path('add_new_movie/', add_movie_shown),
+    path('', intro)
 
 ]
